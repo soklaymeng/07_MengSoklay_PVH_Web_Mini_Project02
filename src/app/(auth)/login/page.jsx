@@ -8,11 +8,9 @@ const LoginPage = () => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
   //define handle login
-
   const handleUserLogin = async (data) => {
     console.log("UserData : ", data);
     // const user = await handleLogin(data);
-
     const res = await signIn("credentials", {
       redirect: false,
       ...data,

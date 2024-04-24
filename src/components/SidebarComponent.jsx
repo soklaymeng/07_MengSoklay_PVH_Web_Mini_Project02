@@ -21,14 +21,19 @@ export default async function SidebarComponent() {
       </div>
 
       {/* each workspace */}
-      <div className="flex items-center mt-5 w-full">
-        <div className="rounded-full w-4 h-4 bg-todo"></div>
-        <div className="flex justify-between w-full pl-3">
-          <p>HRD Design</p>
-          <EditDeleteDropDownComponent />
+      {workspace.data.map((data) => (
+        <div className="flex items-center mt-5 w-full" key={data?.workSpaceId}>
+          <div
+            className={`rounded-full w-4 h-4 ${
+              data.workSpaceId % 2 == 0 ? "bg-todo" : "bg-workingOn"
+            }`}
+          ></div>
+          <div className="flex justify-between w-full pl-3">
+            <p>{data.workspaceName}</p>
+            <EditDeleteDropDownComponent />
+          </div>
         </div>
-      </div>
-
+      ))}
       {/* favorite*/}
       <div className="flex justify-between mt-10">
         <h1 className="uppercase text-gray font-bold">favorite</h1>

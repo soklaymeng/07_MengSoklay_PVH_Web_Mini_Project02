@@ -1,27 +1,21 @@
 "use client";
-import { handleLogin } from "@/actions/authenticationAction";
-import { signIn } from "next-auth/react";
+import { registerAction } from "@/actions/registerAction";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import Image from "next/image";
-import { handleRegister } from "@/actions/registerAction";
+
 const RegisterPage = () => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
-  const handleUserRegister = async (data) => {
-    console.log("User : ", data);
-    const user = await handleRegister(data);
-    const res = await signIn("credentials", {
-      redirect: false,
-      ...data,
-    });
-    console.log("res in login page", res);
-    if (res.ok) {
+  async function handleUserRegister(userInfo) {
+    console.log("user info : ", userInfo);
+
+    const res = await registerAction(userInfo);
+    if (res.status === 200) {
       router.push("/login");
-    } else {
-      router.push("/register");
     }
-  };
+    console.log("register: ", res);
+  }
 
   return (
     <main>
@@ -32,7 +26,6 @@ const RegisterPage = () => {
           </div>
 
           <form
-            action="#"
             className="grid grid-cols-2"
             onSubmit={handleSubmit(handleUserRegister)}
           >
@@ -46,10 +39,10 @@ const RegisterPage = () => {
                     First Name
                   </label>
                   <input
-                    {...register("text")}
+                    {...register("firstname")}
                     type="text"
-                    name="text"
-                    id="text"
+                    name="firstname"
+                    id="firstname"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="First Name"
                     required=""
@@ -63,9 +56,9 @@ const RegisterPage = () => {
                     Last Name
                   </label>
                   <input
-                    {...register("text")}
+                    {...register("lastname")}
                     type="text"
-                    name="text"
+                    name="lastname"
                     id="text"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Last Name"
@@ -80,10 +73,12 @@ const RegisterPage = () => {
                     Gender
                   </label>
                   <select
-                    id="countries"
+                    {...register("gender")}
+                    id="gender"
+                    name="gender"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
-                    <option>Choose your option</option>
+                    <option className="hidden">Choose your option</option>
                     <option>Female</option>
                     <option>Male</option>
                   </select>
@@ -114,9 +109,9 @@ const RegisterPage = () => {
                     Password
                   </label>
                   <input
-                    {...register("Password")}
+                    {...register("password")}
                     type="Password"
-                    name="Password"
+                    name="password"
                     id="Password"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Password"
@@ -131,10 +126,10 @@ const RegisterPage = () => {
                     Confirm Password
                   </label>
                   <input
-                    {...register("Password")}
+                    {...register("confirmPassword")}
                     type="Password"
-                    name="Password"
-                    id="Password"
+                    name="confirmPassword"
+                    id="confirmPassword"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Confirm Password"
                     required=""
@@ -142,7 +137,7 @@ const RegisterPage = () => {
                 </div>
               </div>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400 mt-5">
-                Don’t have an account yet?{" "}
+                Don’t have an account yet?
                 <a
                   href="#"
                   class="font-medium text-primary-600 hover:underline dark:text-primary-500"

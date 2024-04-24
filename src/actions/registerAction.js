@@ -1,10 +1,9 @@
 "use server";
-export const handleRegister = async (userInfo) => {
-  const newUserInfo = {
-    email: userInfo.get(`email`),
-    password: userInfo.get(`password`),
-  };
-  console.log("User info", newUserInfo);
 
-  return newUserInfo;
+import { registerServices } from "@/service/auth.service";
+
+export const registerAction = async (data) => {
+  console.log("get data", data);
+  const res = await registerServices(data);
+  return res;
 };
