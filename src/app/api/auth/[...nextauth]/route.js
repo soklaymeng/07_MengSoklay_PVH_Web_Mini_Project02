@@ -1,4 +1,4 @@
-import { loginService } from "@/service/auth.service";
+import { RegisterServices, loginService } from "@/service/auth.service";
 import nextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { redirect } from "next/navigation";
@@ -16,6 +16,7 @@ export const authOption = {
 
         ///// call login service
         const login = await loginService(newUserInfo);
+        console.log("login: ", login);
         if (login.status === 400) {
           redirect("/register");
         }
@@ -25,7 +26,7 @@ export const authOption = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt", // Adjust this based on your session strategy
+    strategy: "jwt",
   },
 
   callbacks: {

@@ -1,7 +1,7 @@
 import { baseUrl } from "@/utils/constants";
 
-export const loginService = async (userInfo) => {
-  const res = await fetch(`${baseUrl}/auth/login`, {
+export const RegisterServices = async (userInfo) => {
+  const res = await fetch(`${baseUrl}/auth/sign-up`, {
     method: "POST",
     body: JSON.stringify(userInfo),
     headers: {
@@ -10,6 +10,6 @@ export const loginService = async (userInfo) => {
   });
 
   const data = await res.json();
-  console.log("Data Login res", data);
+  console.log("Data register res", data);
   return data;
 };

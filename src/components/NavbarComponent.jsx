@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import AddNewTaskComponent from "./AddNewTaskComponent";
 
 export default function NavbarComponent() {
   const pathname = usePathname();
@@ -187,8 +188,14 @@ export default function NavbarComponent() {
                 </Link>
               </li>
             </ul>
-            
-            <div className={`${pathname === "/todo-list" ? "border-b-2 border-b-blue-700 absolute bottom-0 w-20 left-2" : "border-b-2 border-b-blue-700 absolute bottom-0 w-90 left-24"}`}></div>
+
+            <div
+              className={`${
+                pathname === "/todo-list"
+                  ? "border-b-2 border-b-blue-700 absolute bottom-0 w-20 left-2"
+                  : "border-b-2 border-b-blue-700 absolute bottom-0 w-90 left-24"
+              }`}
+            ></div>
           </div>
         </div>
       </div>

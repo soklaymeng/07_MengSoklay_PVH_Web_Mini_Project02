@@ -9,32 +9,15 @@ const LoginPage = () => {
   const router = useRouter();
   //define handle login
 
-  // async function handleLogin(userInfo) {
-  //   "use server";
-  //   const newUserInfo = {
-  //     email: userInfo.get(`email`),
-  //     password: userInfo.get(`password`),
-  //   };
-  //   console.log("User info", newUserInfo);
-  //   const res = signIn("credentials", {
-  //     redirect: false,
-  //     ...newUserInfo,
-  //   });
-  //   return res;
-  // console.log("Response  : ", await res.json());
-
-  // }
   const handleUserLogin = async (data) => {
-    console.log("User : ", data);
+    console.log("UserData : ", data);
     // const user = await handleLogin(data);
 
     const res = await signIn("credentials", {
       redirect: false,
       ...data,
     });
-
     console.log("res in login page", res);
-
     if (res.ok) {
       router.push("/todo-list");
     } else {
@@ -130,11 +113,11 @@ const LoginPage = () => {
             </a>
             <div className="mt-4 flex items-center w-full text-center">
               <a
-                href="#"
+                href="/register"
                 className="text-xs text-gray-500 capitalize text-center w-full"
               >
                 Don&apos;t have any account yet?
-                <span className="text-blue-700"> Sign Up</span>
+                <span className="text-blue-700"> Register</span>
               </a>
             </div>
           </form>

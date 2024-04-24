@@ -1,15 +1,41 @@
+"use client";
+import { handleLogin } from "@/actions/authenticationAction";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import Image from "next/image";
+import { handleRegister } from "@/actions/registerAction";
 const RegisterPage = () => {
+  const { register, handleSubmit } = useForm();
+  const router = useRouter();
+  const handleUserRegister = async (data) => {
+    console.log("User : ", data);
+    const user = await handleRegister(data);
+    const res = await signIn("credentials", {
+      redirect: false,
+      ...data,
+    });
+    console.log("res in login page", res);
+    if (res.ok) {
+      router.push("/login");
+    } else {
+      router.push("/register");
+    }
+  };
+
   return (
     <main>
       <section className="bg-white w-screen flex m-auto h-screen overflow-hidden">
         <div className="py-8 px-4 mx-auto max-w-full lg:py-16  grid">
           <div className="flex justify-between">
             <Image src={"/assets/icons/logo.svg"} width={150} height={100} />
-            <Image src={"/assets/icons/arrow.svg"} width={25} height={30} />
           </div>
 
-          <form action="#" className="grid grid-cols-2">
+          <form
+            action="#"
+            className="grid grid-cols-2"
+            onSubmit={handleSubmit(handleUserRegister)}
+          >
             <div className="bg-green-300 p-5">
               <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                 <div className="w-full">
@@ -20,6 +46,7 @@ const RegisterPage = () => {
                     First Name
                   </label>
                   <input
+                    {...register("text")}
                     type="text"
                     name="text"
                     id="text"
@@ -36,6 +63,7 @@ const RegisterPage = () => {
                     Last Name
                   </label>
                   <input
+                    {...register("text")}
                     type="text"
                     name="text"
                     id="text"
@@ -49,46 +77,34 @@ const RegisterPage = () => {
                     for="brand"
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
+                    Gender
+                  </label>
+                  <select
+                    id="countries"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option>Choose your option</option>
+                    <option>Female</option>
+                    <option>Male</option>
+                  </select>
+                </div>
+
+                <div className="w-full">
+                  <label
+                    for="brand"
+                    className="block mb-2 text-sm font-medium text-gray-900 "
+                  >
                     Email
                   </label>
                   <input
-                    type=" Email"
-                    name=" Email"
-                    id=" Email"
+                    {...register("email")}
+                    type="email"
+                    name="email"
+                    id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder=" Email"
                     required=""
                   />
-                </div>
-                <div className="w-full">
-                  <label
-                    for="phone-input"
-                    class="block mb-2 text-sm font-medium text-gray-900 "
-                  >
-                    Phone number:
-                  </label>
-                  <div class="relative">
-                    <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
-                      <svg
-                        class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 19 18"
-                      >
-                        <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
-                      </svg>
-                    </div>
-                    <input
-                      type="text"
-                      id="phone-input"
-                      aria-describedby="helper-text-explanation"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500 text-white"
-                      pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                      placeholder="123-456-7890"
-                      required
-                    />
-                  </div>
                 </div>
                 <div className="w-full">
                   <label
@@ -98,6 +114,7 @@ const RegisterPage = () => {
                     Password
                   </label>
                   <input
+                    {...register("Password")}
                     type="Password"
                     name="Password"
                     id="Password"
@@ -108,16 +125,17 @@ const RegisterPage = () => {
                 </div>
                 <div className="w-full">
                   <label
-                    for="Confirm Password"
+                    for="Password"
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
                     Confirm Password
                   </label>
                   <input
+                    {...register("Password")}
                     type="Password"
-                    name="Confirm Password"
-                    id="Confirm Password"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    name="Password"
+                    id="Password"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Confirm Password"
                     required=""
                   />
@@ -139,7 +157,7 @@ const RegisterPage = () => {
                 backgroundImage: `url(https://i.pinimg.com/564x/af/cb/00/afcb0036bcdb48486b60b251e5dd36a3.jpg)`,
               }}
             ></div>
-            <button className="bg-red-500 grid max-w-24 h-9 grid-cols-1 content-center m-0 mb-auto mt-5">
+            <button className="bg-green-400 grid max-w-24 h-9 grid-cols-1 content-center m-0 mb-auto mt-5 rounded-md">
               Sign Up
             </button>
           </form>

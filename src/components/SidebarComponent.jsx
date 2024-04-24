@@ -2,8 +2,11 @@ import Image from "next/image";
 import React from "react";
 import EditDeleteDropDownComponent from "./EditDeleteDropDownComponent";
 import WorkspacePopupComponent from "./WorkspacePopupComponent";
+import { getAllWorkspaces } from "@/service/workspace.service";
 
-export default function SidebarComponent() {
+export default async function SidebarComponent() {
+  const workspace = await getAllWorkspaces();
+  console.log("workspace", workspace);
   return (
     <div className="pl-10 mt-6 h-screen">
       <div className="flex justify-between">
@@ -22,7 +25,6 @@ export default function SidebarComponent() {
         <div className="rounded-full w-4 h-4 bg-todo"></div>
         <div className="flex justify-between w-full pl-3">
           <p>HRD Design</p>
-
           <EditDeleteDropDownComponent />
         </div>
       </div>
