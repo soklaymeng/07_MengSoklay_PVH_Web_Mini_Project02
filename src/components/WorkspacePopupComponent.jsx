@@ -11,7 +11,6 @@ export default async function WorkspacePopupComponent() {
     revalidateTag("workspaceName");
     console.log("after login", res);
   }
-
   return (
     <div>
       {/* The button to open modal */}

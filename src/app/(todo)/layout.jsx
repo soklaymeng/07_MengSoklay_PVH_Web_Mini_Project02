@@ -1,9 +1,8 @@
 import ListBoardComponentHeader from "@/components/ListBoardComponentHeader";
 import NavbarComponent from "@/components/NavbarComponent";
 import SidebarComponent from "@/components/SidebarComponent";
-import TodoCardComponent from "@/components/TodoCardComponent";
 
-const TodoBoardPage = () => {
+const LayoutPageToDo = ({ children }) => {
   return (
     <main>
       <div className="flex w-full">
@@ -12,11 +11,12 @@ const TodoBoardPage = () => {
         </div>
         <div className="w-[80%]">
           <NavbarComponent />
-          <TodoCardComponent />
+          <ListBoardComponentHeader />
+          {children}
         </div>
       </div>
     </main>
   );
 };
 
-export default TodoBoardPage;
+export default LayoutPageToDo;
