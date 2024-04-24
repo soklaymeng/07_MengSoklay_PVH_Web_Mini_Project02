@@ -1,5 +1,11 @@
+import TodoCardComponent from "@/components/TodoCardComponent";
+
 const TodoBoardPage = () => {
-  return <main>12345678</main>;
+  return (
+    <main>
+      <TodoCardComponent />
+    </main>
+  );
 };
 
 export default TodoBoardPage;

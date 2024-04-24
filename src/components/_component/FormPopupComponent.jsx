@@ -16,7 +16,7 @@ const FormPopupComponent = ({ id }) => {
     <>
       {/* You can open the modal using document.getElementById('ID').showModal() method */}
       <button className="btn" onClick={handleEditWorkspace}>
-        open modal
+        edit
       </button>
       <dialog id={`my_modal_${id}`} className="modal">
         <form onSubmit={handleSubmit(handleEditWorkspace)}>
@@ -30,7 +30,10 @@ const FormPopupComponent = ({ id }) => {
               className="mt-3 block border border-gray rounded-lg w-full py-2 px-5 focus:ring-blue-500 focus:border-blue-500 focus:outline-none focus:ring-1"
             />
             <div>
-              <button className="bg-yellow-200 p-2 rounded-md " type="submit">
+              <button
+                className="bg-yellow-200 p-2 rounded-md mt-5 "
+                type="submit"
+              >
                 Update
               </button>
             </div>
